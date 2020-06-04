@@ -1,0 +1,57 @@
+{
+    "name": "water-admin/water-admin",
+    "description": "Quick and easy to customize admin panel for Laravel.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Lucas Yang",
+            "email": "yangchenshin77@gmail.com"
+        }
+    ],
+    "keywords": [
+        "laravel",
+        "admin",
+        "customize",
+        "generator"
+    ],
+    "homepage": "https://github.com/water-admin/water-admin",
+    "require": {
+        "php": "^7.1.3",
+        "facade/ignition-contracts": "^1.0",
+        "illuminate/contracts": "~5.6|~5.7|~5.8|^6.0|^7.0",
+        "inertiajs/inertia-laravel": "^0.2.5",
+        "laravel/framework": "~5.6|~5.7|~5.8|^6.0|^7.0"
+    },
+    "require-dev": {
+        "mockery/mockery": "^1.3.1",
+        "orchestra/testbench": "~3.6|~3.7|~3.8|^4.0|^5.0",
+        "phpunit/phpunit": "^7.0|^8.0|^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "WaterAdmin\\WaterAdmin\\": "src"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "WaterAdmin\\WaterAdmin\\Test\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "WaterAdmin\\WaterAdmin\\WaterServiceProvider"
+            ],
+            "aliases": {
+                "Water": "WaterAdmin\\WaterAdmin\\Water"
+            }
+        }
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
