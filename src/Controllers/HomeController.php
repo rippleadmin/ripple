@@ -1,6 +1,6 @@
 <?php
 
-namespace WaterAdmin\WaterAdmin\Http\Controllers;
+namespace WaterAdmin\WaterAdmin\Controllers;
 
 use Inertia\Inertia;
 use WaterAdmin\WaterAdmin\Components\Aaa;

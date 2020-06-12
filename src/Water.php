@@ -9,16 +9,23 @@ class Water
     /**
      * The CSS files include to Water Admin.
      *
-     * @var array
+     * @var string[]
      */
     public static $css = [];
 
     /**
      * The JS files include to Water Admin.
      *
-     * @var array
+     * @var string[]
      */
     public static $js = [];
+
+    /**
+     * The main assets for Water Admin.
+     *
+     * @var string[]
+     */
+    public static $mainAssets = [];
 
     /**
      * Define the "water" routes for the application.
@@ -27,7 +34,7 @@ class Water
      */
     public static function routes()
     {
-        Route::namespace('\WaterAdmin\WaterAdmin\Http\Controllers')
+        Route::namespace('\WaterAdmin\WaterAdmin\Controllers')
             ->group(__DIR__.'/../routes/water.php');
     }
 
@@ -55,6 +62,20 @@ class Water
     public static function js(string $name, string $path)
     {
         static::$js[$name] = $path;
+
+        return new static;
+    }
+
+    /**
+     * Add the main assets to Water Admin.
+     *
+     * @param  string  $name
+     * @param  string  $path
+     * @return static
+     */
+    public static function mainAsset(string $name, string $path)
+    {
+        static::$mainAssets[$name] = $path;
 
         return new static;
     }

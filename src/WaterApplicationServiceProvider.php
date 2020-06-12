@@ -4,7 +4,7 @@ namespace WaterAdmin\WaterAdmin;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use WaterAdmin\WaterAdmin\Http\Middleware\InertiaRequest;
+use WaterAdmin\WaterAdmin\Middleware\InertiaRequest;
 
 class WaterApplicationServiceProvider extends ServiceProvider
 {
@@ -27,6 +27,7 @@ class WaterApplicationServiceProvider extends ServiceProvider
     {
         $this->registerRoutes();
         $this->registerViews();
+        $this->registerAssets();
     }
 
     /**
@@ -51,5 +52,16 @@ class WaterApplicationServiceProvider extends ServiceProvider
     public function registerViews()
     {
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'water-admin');
+    }
+
+    /**
+     * Register the Water Admin base assets.
+     *
+     * @return void
+     */
+    public function registerAssets()
+    {
+        Water::mainAsset('water-admin.js', public_path('vendor/water-admin/js/water-admin.js'));
+        Water::mainAsset('water-admin-main.js', public_path('vendor/water-admin/js/main.js'));
     }
 }

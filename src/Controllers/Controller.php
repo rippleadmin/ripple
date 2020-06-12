@@ -1,6 +1,6 @@
 <?php
 
-namespace WaterAdmin\WaterAdmin\Http\Controllers;
+namespace WaterAdmin\WaterAdmin\Controllers;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;

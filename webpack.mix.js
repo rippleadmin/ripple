@@ -2,8 +2,8 @@ const mix = require('laravel-mix')
 const fs = require('fs')
 
 mix.setPublicPath('public')
-  .js('resources/js/app.js', 'public/js')
-  .js('resources/js/vendor.js', 'public/js')
+  .js('resources/js/main.js', 'public/js')
+  .js('resources/js/water-admin.js', 'public/js')
   .webpackConfig({
     output: {
       publicPath: '/vendor/water-admin/',
@@ -16,7 +16,6 @@ mix.setPublicPath('public')
       }
     }
   })
-  .version()
 
 fs.access('../water-admin-test', error => {
   if (!error) {
