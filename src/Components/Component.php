@@ -1,12 +1,15 @@
 <?php
 
-namespace WaterAdmin\WaterAdmin;
+namespace WaterAdmin\WaterAdmin\Components;
 
 use JsonSerializable;
+use WaterAdmin\WaterAdmin\Concerns\RelativeClassName;
 use WaterAdmin\WaterAdmin\Contracts\InertiaRenderable;
 
 abstract class Component implements JsonSerializable, InertiaRenderable
 {
+    use RelativeClassName;
+
     /**
      * The component name.
      *
@@ -48,11 +51,11 @@ abstract class Component implements JsonSerializable, InertiaRenderable
      */
     public function getName()
     {
-        if ($this->name) {
+        if (isset($this->name)) {
             return $this->name;
         }
 
-        return class_basename($this);
+        return $this->getRelativeClassName();
     }
 
     /**

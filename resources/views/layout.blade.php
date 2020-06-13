@@ -7,8 +7,8 @@
     <title>Water Admin</title>
 
     <!-- Styles -->
-    @foreach (Water::$css as $name => $css)
-    <link href="{{ route('water.asset', $name) }}" rel="stylesheet">
+    @foreach (Water::styles() as $asset)
+    <link href="{{ asset(mix($asset->path(), $asset->manifestDirectory())) }}" rel="stylesheet">
     @endforeach
 </head>
 
@@ -17,13 +17,13 @@
     @inertia
 
     <!-- Scripts -->
-    <script src="{{ route('water.asset', 'water-admin.js') }}"></script>
+    <script src="{{ asset(mix('js/water-admin.js', 'vendor/water-admin')) }}"></script>
 
-    @foreach (Water::$js as $name => $js)
-    <script src="{{ route('water.asset', $name) }}"></script>
+    @foreach (Water::scripts() as $asset)
+    <script src="{{ asset(mix($asset->path(), $asset->manifestDirectory())) }}"></script>
     @endforeach
 
-    <script src="{{ route('water.asset', 'water-admin-main.js') }}"></script>
+    <script src="{{ asset(mix('js/main.js', 'vendor/water-admin')) }}"></script>
     <script>
     Water.initInertiaApp();
     </script>
