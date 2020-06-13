@@ -17,41 +17,28 @@ class AssetController
      */
     public function __invoke($file)
     {
-        if (! $path = $this->assets()[$file]) {
+        /** @var \WaterAdmin\WaterAdmin\Asset $asset */
+        if (! $asset = Water::getAsset($file)) {
             abort(404);
         }
 
         $expires = strtotime('+1 year');
-        $lastModified = filemtime($path);
+        $lastModified = filemtime($asset->path());
         $cacheControl = 'public, max-age=31536000';
 
-        if ($this->matchesCache($lastModified)) {
+        if ($this->matchesCache($lastModified) && config('app.env') === 'production') {
             return response()->noContent(304, [
                 'Expires' => $this->httpDate($expires),
                 'Cache-Control' => $cacheControl,
             ]);
         }
 
-        return response()->file($path, [
-            'Content-Type' => $this->mimeType($path).'; charset=utf-8',
+        return response()->file($asset->path(), [
+            'Content-Type' => $this->mimeType($asset->path()).'; charset=utf-8',
             'Expires' => $this->httpDate($expires),
             'Cache-Control' => $cacheControl,
             'Last-Modified' => $this->httpDate($lastModified),
         ]);
-    }
-
-    /**
-     * Get the assets path.
-     *
-     * @return array
-     */
-    protected function assets()
-    {
-        return array_merge(
-            Water::$css,
-            Water::$js,
-            Water::$mainAssets
-        );
     }
 
     /**
