@@ -48,7 +48,7 @@ class WaterServiceProvider extends ServiceProvider
      */
     public function registerClassesNamespacesPrefix()
     {
-        Component::addClassNamespace('WaterAdmin\WaterAdmin\Component');
+        Component::namespace('WaterAdmin\Components');
     }
 
     /**

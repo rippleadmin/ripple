@@ -9,24 +9,24 @@ trait RelativeClassName
      *
      * @var array
      */
-    public static $namespaces = [];
+    protected static $namespaces = [];
 
     /**
      * The class namespaces prefix pattern.
      *
      * @var string|null
      */
-    public static $namespacesPattern;
+    protected static $namespacesPattern;
 
     /**
      * Add class namespace prefix.
      *
-     * @param  string  $prefix
+     * @param  string  $namespace
      * @return void
      */
-    public static function addClassNamespace(string $prefix)
+    public static function namespace(string $namespace)
     {
-        static::$namespaces[] = $prefix;
+        static::$namespaces[] = $namespace;
     }
 
     /**
