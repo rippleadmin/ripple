@@ -1,6 +1,6 @@
 <?php
 
-namespace WaterAdmin\WaterAdmin\Middleware;
+namespace WaterAdmin\Middleware;
 
 use Closure;
 use Inertia\Inertia;

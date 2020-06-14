@@ -1,6 +1,6 @@
 <?php
 
-namespace WaterAdmin\WaterAdmin;
+namespace WaterAdmin;
 
 class Asset
 {

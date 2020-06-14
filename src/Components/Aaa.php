@@ -1,15 +1,15 @@
 <?php
 
-namespace WaterAdmin\WaterAdmin\Components;
+namespace WaterAdmin\Components;
 
-use WaterAdmin\WaterAdmin\Component;
+use WaterAdmin\Component;
 
 class Aaa extends Component
 {
     /**
      * Set the initial component props.
      *
-     * @return array|\Illuminate\Contracts\Support\Arrayable
+     * @return array
      */
     public function props()
     {

@@ -1,10 +1,10 @@
 <?php
 
-namespace WaterAdmin\WaterAdmin;
+namespace WaterAdmin;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use WaterAdmin\WaterAdmin\Components\Component;
+use WaterAdmin\Component;
 
 class WaterServiceProvider extends ServiceProvider
 {

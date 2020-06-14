@@ -1,6 +1,6 @@
 <?php
 
-namespace WaterAdmin\WaterAdmin\Contracts;
+namespace WaterAdmin\Contracts;
 
 use Illuminate\Contracts\Support\Arrayable;
 

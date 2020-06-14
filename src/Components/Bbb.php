@@ -1,8 +1,8 @@
 <?php
 
-namespace WaterAdmin\WaterAdmin\Components;
+namespace WaterAdmin\Components;
 
-use WaterAdmin\WaterAdmin\Component;
+use WaterAdmin\Component;
 
 class Bbb extends Component
 {

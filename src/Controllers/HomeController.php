@@ -1,9 +1,9 @@
 <?php
 
-namespace WaterAdmin\WaterAdmin\Controllers;
+namespace WaterAdmin\Controllers;
 
 use Inertia\Inertia;
-use WaterAdmin\WaterAdmin\Components\Aaa;
+use WaterAdmin\Components\Aaa;
 
 class HomeController extends Controller
 {

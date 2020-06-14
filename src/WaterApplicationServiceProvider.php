@@ -1,6 +1,6 @@
 <?php
 
-namespace WaterAdmin\WaterAdmin;
+namespace WaterAdmin;
 
 use Illuminate\Support\ServiceProvider;
 

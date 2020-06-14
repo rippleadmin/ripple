@@ -1,6 +1,6 @@
 <?php
 
-namespace WaterAdmin\WaterAdmin;
+namespace WaterAdmin;
 
 use Illuminate\Support\Facades\Route;
 
@@ -34,7 +34,7 @@ class Water
      */
     public static function routes()
     {
-        Route::namespace('\WaterAdmin\WaterAdmin\Controllers')
+        Route::namespace('\WaterAdmin\Controllers')
             ->group(__DIR__.'/../routes/water.php');
     }
 

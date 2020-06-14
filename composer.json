@@ -30,7 +30,7 @@
     },
     "autoload": {
         "psr-4": {
-            "WaterAdmin\\WaterAdmin\\": "src"
+            "WaterAdmin\\": "src"
         },
         "files": [
             "src/helpers.php"
@@ -38,16 +38,16 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "WaterAdmin\\WaterAdmin\\Test\\": "tests"
+            "WaterAdmin\\Test\\": "tests"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "WaterAdmin\\WaterAdmin\\WaterServiceProvider"
+                "WaterAdmin\\WaterServiceProvider"
             ],
             "aliases": {
-                "Water": "WaterAdmin\\WaterAdmin\\Water"
+                "Water": "WaterAdmin\\Water"
             }
         }
     },
