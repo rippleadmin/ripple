@@ -2,10 +2,9 @@
 
 namespace WaterAdmin\Concerns;
 
-use WaterAdmin\WaterDrop;
 use WaterAdmin\WaterModel;
 
-trait WaterModelCommonProperty
+trait HasWaterModel
 {
     /**
      * The water model instance.
@@ -13,13 +12,6 @@ trait WaterModelCommonProperty
      * @var \WaterAdmin\WaterModel
      */
     protected $waterModel;
-
-    /**
-     * The water drop instance.
-     *
-     * @var \WaterAdmin\WaterDrop
-     */
-    protected $waterDrop;
 
     /**
      * Get the water model instance.
@@ -45,35 +37,12 @@ trait WaterModelCommonProperty
     }
 
     /**
-     * Get the original model instance.
+     * Get the base eloquent model instance.
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function model()
+    public function eloquent()
     {
-        return $this->waterModel->model();
-    }
-
-    /**
-     * Get the water drop instance.
-     *
-     * @return \WaterAdmin\WaterDrop
-     */
-    public function waterDrop()
-    {
-        return $this->waterDrop;
-    }
-
-    /**
-     * Set the water drop instance.
-     *
-     * @param  \WaterAdmin\WaterDrop  $waterDrop
-     * @return $this
-     */
-    public function setWaterDrop(WaterDrop $waterDrop)
-    {
-        $this->waterDrop = $waterDrop;
-
-        return $this;
+        return $this->waterModel->eloquent();
     }
 }

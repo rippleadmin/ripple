@@ -4,26 +4,22 @@ import { firstModule } from './util'
 
 export default class Water {
   constructor() {
-    this.pages = []
+    this.pagesCallable = []
   }
 
-  page(requirePage) {
-    this.pages.push(requirePage)
+  pages(callable) {
+    this.pagesCallable.push(callable)
   }
 
-  /**
-   * Register components into dir.
-   *
-   * @param {Function} requireModules
-   */
-  components(requireModules) {
-    const components = requireModules()
+  plugin(callable) {
+    callable(Vue, this)
+  }
+
+  components(callable) {
+    const components = callable()
     components.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], components(key).default))
   }
 
-  /**
-   * Initial inertia app.
-   */
   initInertiaApp() {
     Vue.use(InertiaApp)
 
@@ -33,7 +29,7 @@ export default class Water {
       render: h => h(InertiaApp, {
         props: {
           initialPage: JSON.parse(root.dataset.page),
-          resolveComponent: name => firstModule(this.pages, [name])
+          resolveComponent: name => firstModule(this.pagesCallable, name)
         }
       })
     }).$mount(root)

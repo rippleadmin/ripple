@@ -1,3 +1,5 @@
 import Water from './Water'
 
-window.Water = new Water()
+if (window !== undefined && ! window.Water) {
+  window.Water = new Water()
+}

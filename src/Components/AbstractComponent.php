@@ -2,11 +2,13 @@
 
 namespace WaterAdmin\Components;
 
+use Illuminate\Support\Traits\Macroable;
 use WaterAdmin\Concerns\RelativeClassName;
 
 abstract class AbstractComponent
 {
-    use RelativeClassName;
+    use Macroable,
+        RelativeClassName;
 
     /**
      * The component name.

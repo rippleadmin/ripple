@@ -45,12 +45,6 @@ trait HasOperations
      */
     public function addOperation(string $name, Operation $operation)
     {
-        if ($this instanceof WaterModel) {
-            $operation->setWaterModel($this);
-        } elseif ($this instanceof WaterDrop) {
-            $operation->setWaterDrop($this);
-        }
-
         $this->operations[$name] = $operation;
 
         return $this;
@@ -64,7 +58,14 @@ trait HasOperations
     public function bootOperations()
     {
         foreach ($this->operations as $name => $operation) {
-            $this->addOperation($name, app($operation));
+            /** @var \WaterAdmin\Operation $operation */
+            $operation = app($operation);
+
+            $this->addOperation($name, $operation);
+
+            if ($this instanceof WaterDrop) {
+                $operation->setWaterDrop($this);
+            }
         }
 
         return $this;

@@ -1,7 +1,7 @@
 <template>
   <div>
     Hi Home
-    <water-component :value="aaa"></water-component>
+    <w-component :value="aaa"></w-component>
   </div>
 </template>
 

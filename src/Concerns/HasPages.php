@@ -3,9 +3,7 @@
 namespace WaterAdmin\Concerns;
 
 use WaterAdmin\Page;
-use WaterAdmin\PlainPage;
 use WaterAdmin\WaterDrop;
-use WaterAdmin\WaterModel;
 
 trait HasPages
 {
@@ -30,7 +28,7 @@ trait HasPages
      * Get the page instance.
      *
      * @param  string  $name
-     * @return \WaterAdmin\PlainPage
+     * @return \WaterAdmin\Page
      */
     public function page(string $name)
     {
@@ -41,19 +39,11 @@ trait HasPages
      * Add a new page instance.
      *
      * @param  string  $name
-     * @param  \WaterAdmin\PlainPage  $page
+     * @param  \WaterAdmin\Page  $page
      * @return $this
      */
-    public function addPage(string $name, PlainPage $page)
+    public function addPage(string $name, Page $page)
     {
-        if ($page instanceof Page) {
-            if ($this instanceof WaterModel) {
-                $page->setWaterModel($this);
-            } elseif ($this instanceof WaterDrop) {
-                $page->setWaterDrop($this);
-            }
-        }
-
         $this->pages[$name] = $page;
 
         return $this;
@@ -67,7 +57,16 @@ trait HasPages
     public function bootPages()
     {
         foreach ($this->pages as $name => $page) {
-            $this->addPage($name, app($page));
+            /** @var \WaterAdmin\Page $page */
+            $page = app($page);
+
+            $this->addPage($name, $page);
+
+            if ($this instanceof WaterDrop) {
+                $page->setWaterDrop($this);
+            }
+
+            $page->boot();
         }
 
         return $this;

@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>AAA</h1>
-    <water-component :value="bbb"></water-component>
+    <w-component :value="bbb"></w-component>
   </div>
 </template>
 

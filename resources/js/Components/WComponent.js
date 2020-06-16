@@ -12,7 +12,7 @@ export default {
     }
   },
   render(h, { props, data, children }) {
-    return h(props.value.name, mergeData(data, {
+    return h(props.value.name.split('/').pop(), mergeData(data, {
       props: props.value.props
     }), children)
   }
