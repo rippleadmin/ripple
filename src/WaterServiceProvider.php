@@ -38,6 +38,7 @@ class WaterServiceProvider extends ServiceProvider
         $this->registerViews();
         $this->registerMigrations();
         $this->registerFactories();
+        $this->addZiggyConfig();
         $this->publishFiles();
     }
 
@@ -87,6 +88,25 @@ class WaterServiceProvider extends ServiceProvider
             $this->app['config']['auth.providers'],
             $this->app['config']['water.auth.providers']
         );
+    }
+
+    /**
+     * Add the Water Admin route config to Ziggy.
+     *
+     * @return void
+     */
+    public function addZiggyConfig()
+    {
+        $blacklist = (array) $this->app['config']['ziggy.blacklist'];
+
+        foreach (['debugbar.*', 'horizon.*', 'ignition.*', 'water.*'] as $pattern) {
+            if (! in_array($pattern, $blacklist)) {
+                $blacklist[] = $pattern;
+            }
+        }
+
+        $this->app['config']['ziggy.blacklist'] = $blacklist;
+        $this->app['config']['ziggy.groups.water'] = ['water.*'];
     }
 
     /**

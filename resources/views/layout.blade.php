@@ -10,6 +10,8 @@
     @foreach (Water::styles() as $asset)
     <link href="{{ asset(mix($asset->path(), $asset->manifestDirectory())) }}" rel="stylesheet">
     @endforeach
+
+    @routes('water')
 </head>
 
 <body class="bg-purple-100">
