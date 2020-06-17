@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use WaterAdmin\Component;
 use WaterAdmin\Exceptions\Handler as ExceptionHandler;
+use WaterAdmin\Middleware\Authenticate;
+use WaterAdmin\Middleware\RedirectIfAuthenticated;
 
 class WaterServiceProvider extends ServiceProvider
 {
@@ -29,6 +31,7 @@ class WaterServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->registerMiddlewares();
         $this->registerRoutes();
         $this->registerViews();
         $this->registerMigrations();
@@ -74,6 +77,17 @@ class WaterServiceProvider extends ServiceProvider
     public function registerClassesNamespacesPrefix()
     {
         Component::namespace('WaterAdmin\Components');
+    }
+
+    /**
+     * Register the Water Admin middlewares.
+     *
+     * @return void
+     */
+    public function registerMiddlewares()
+    {
+        $this->app['router']->aliasMiddleware('water.auth', Authenticate::class);
+        $this->app['router']->aliasMiddleware('water.guest', RedirectIfAuthenticated::class);
     }
 
     /**
