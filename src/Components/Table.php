@@ -1,8 +1,6 @@
 <?php
 
-namespace WaterAdmin;
-
-use WaterAdmin\Concerns\HasPresenter;
+namespace WaterAdmin\Components;
 
 class Table extends Component
 {
