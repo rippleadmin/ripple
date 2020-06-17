@@ -12,3 +12,17 @@ export async function firstModule(imports, ...args) {
     } catch (e) {}
   }
 }
+
+/**
+ * Get the Water Admin url.
+ *
+ * @param {strng} path
+ * @param {object} page
+ */
+export function waterUrl(path, page) {
+  return [
+    location.origin,
+    page.props.url.prefix,
+    path.replace(/^\//, '')
+  ].join('/').replace(/\/$/, '')
+}

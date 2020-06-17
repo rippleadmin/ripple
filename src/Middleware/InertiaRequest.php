@@ -26,6 +26,11 @@ class InertiaRequest
                     'name' => Config::get('water.name'),
                 ];
             },
+            'url' => function () {
+                return [
+                    'prefix' => Config::get('water.prefix'),
+                ];
+            },
             'errors' => function () {
                 return Session::get('errors')
                     ? Session::get('errors')->getBag('default')->getMessages()

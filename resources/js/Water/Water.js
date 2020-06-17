@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import { InertiaApp } from '@inertiajs/inertia-vue'
-import { firstModule } from './util'
+import { firstModule, waterUrl } from './util'
 
 export default class Water {
   constructor() {
@@ -21,17 +21,24 @@ export default class Water {
   }
 
   initInertiaApp() {
+    const root = document.getElementById('app')
+    const page = JSON.parse(root.dataset.page)
+
     Vue.use(InertiaApp)
 
-    const root = document.getElementById('app')
+    Vue.prototype.$url = path => waterUrl(path, page)
+    Vue.prototype.$route = (...args) => route(...args).url()
 
     window.app = new Vue({
       render: h => h(InertiaApp, {
         props: {
-          initialPage: JSON.parse(root.dataset.page),
+          initialPage: page,
           resolveComponent: name => firstModule(this.pagesCallable, name)
         }
       })
     }).$mount(root)
+
+    console.log(app.$url('login'))
+    console.log(app.$url('/'))
   }
 }
