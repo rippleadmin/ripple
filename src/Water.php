@@ -28,7 +28,14 @@ class Water
     public static $assets = [];
 
     /**
-     * The Water Admin plugin routes path.
+     * The Water Admin routes file path.
+     *
+     * @var array
+     */
+    public static $routesPath;
+
+    /**
+     * The Water Admin plugin routes file path.
      *
      * @var array
      */
@@ -47,6 +54,29 @@ class Water
         foreach (static::$pluginRoutesPath as $path) {
             Route::group([], $path);
         }
+    }
+
+    /**
+     * Register the routes file path.
+     *
+     * @param  string  $path
+     * @return static
+     */
+    public static function setRoutesPath(string $path)
+    {
+        static::$routesPath = $path;
+
+        return new static;
+    }
+
+    /**
+     * Get the routes file path.
+     *
+     * @return string
+     */
+    public static function getRoutesPath()
+    {
+        return static::$routesPath ?? base_path('routes/water.php');
     }
 
     /**

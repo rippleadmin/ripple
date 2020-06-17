@@ -141,7 +141,7 @@ class WaterServiceProvider extends ServiceProvider
             ->prefix(config('water.prefix'))
             ->middleware(config('water.middleware'))
             ->namespace(config('water.controller'))
-            ->group(base_path('routes/water.php'));
+            ->group(Water::getRoutesPath());
     }
 
     /**

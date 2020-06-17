@@ -10,19 +10,32 @@
          processIsolation="false"
          stopOnFailure="false">
     <testsuites>
-        <testsuite name="Package Tests">
-            <directory suffix="Test.php">./tests</directory>
+        <testsuite name="Package Unit Tests">
+            <directory suffix="Test.php">./tests/Unit</directory>
+        </testsuite>
+        <testsuite name="Package Feature Tests">
+            <directory suffix="Test.php">./tests/Feature</directory>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">./src</directory>
             <exclude>
-                <file>./src/WizardServiceProvider.php</file>
-                <directory>./src/Console</directory>
-                <directory>./src/Contracts</directory>
+                <file>./src/WaterServiceProvider.php</file>
                 <directory>./src/Exceptions</directory>
             </exclude>
         </whitelist>
     </filter>
+    <php>
+        <env name="APP_ENV" value="testing"/>
+        <env name="APP_KEY" value="AckfSECXIvnK5r28GVIWUAxmbBSjTsmF"/>
+        <env name="BCRYPT_ROUNDS" value="4"/>
+        <env name="CACHE_DRIVER" value="array"/>
+        <env name="DB_CONNECTION" value="sqlite"/>
+        <env name="DB_DATABASE" value=":memory:"/>
+        <env name="MAIL_MAILER" value="array"/>
+        <env name="QUEUE_CONNECTION" value="sync"/>
+        <env name="SESSION_DRIVER" value="array"/>
+        <env name="TELESCOPE_ENABLED" value="false"/>
+    </php>
 </phpunit>
