@@ -4,6 +4,17 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Water Admin Name
+    |--------------------------------------------------------------------------
+    |
+    | This is the Water Admin main title.
+    |
+    */
+
+    'name' => 'Water Admin',
+
+    /*
+    |--------------------------------------------------------------------------
     | Water Admin Domain
     |--------------------------------------------------------------------------
     |
@@ -33,7 +44,7 @@ return [
     | Water Admin Controller Namespace
     |--------------------------------------------------------------------------
     |
-    | This value is the controller namespace of Water Admin.
+    | This is the controller namespace of Water Admin.
     |
     */
 
@@ -53,6 +64,34 @@ return [
     'middleware' => [
         'web',
         \WaterAdmin\Middleware\InertiaRequest::class,
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Water Admin Authentication
+    |--------------------------------------------------------------------------
+    |
+    | This is define the Water Admin authentication config. More reference
+    | the Laravel auth config.
+    |
+    */
+
+    'auth' => [
+        'guard' => 'water',
+
+        'guards' => [
+            'water' => [
+                'driver' => 'session',
+                'provider' => 'water_users',
+            ],
+        ],
+
+        'providers' => [
+            'water_users' => [
+                'driver' => 'eloquent',
+                'model' => \WaterAdmin\Models\User::class,
+            ],
+        ],
     ],
 
 ];

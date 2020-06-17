@@ -3,6 +3,8 @@
 namespace WaterAdmin\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 
 class InertiaRequest
@@ -17,6 +19,19 @@ class InertiaRequest
     public function handle($request, Closure $next)
     {
         Inertia::setRootView('water-admin::layout');
+
+        Inertia::share([
+            'app' => function () {
+                return [
+                    'name' => Config::get('water.name'),
+                ];
+            },
+            'errors' => function () {
+                return Session::get('errors')
+                    ? Session::get('errors')->getBag('default')->getMessages()
+                    : (object) [];
+            },
+        ]);
 
         return $next($request);
     }
