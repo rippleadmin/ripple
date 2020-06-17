@@ -1,7 +1,5 @@
 <?php
 
-use WaterAdmin\Routing\Redirector;
-
 if (! function_exists('class_basename')) {
     /**
      * Get the class "basename" of the given object / class.
@@ -45,9 +43,9 @@ if (! function_exists('water_redirect')) {
     function water_redirect($to = null, $status = 302, $headers = [], $secure = null)
     {
         if (is_null($to)) {
-            return app(Redirector::class);
+            return app('water.redirect');
         }
 
-        return app(Redirector::class)->to($to, $status, $headers, $secure);
+        return app('water.redirect')->to($to, $status, $headers, $secure);
     }
 }

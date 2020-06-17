@@ -9,6 +9,7 @@ use WaterAdmin\Component;
 use WaterAdmin\Exceptions\Handler as ExceptionHandler;
 use WaterAdmin\Middleware\Authenticate;
 use WaterAdmin\Middleware\RedirectIfAuthenticated;
+use WaterAdmin\Routing\Redirector;
 
 class WaterServiceProvider extends ServiceProvider
 {
@@ -20,6 +21,7 @@ class WaterServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerExceptionHandler();
+        $this->registerRedirector();
         $this->registerConfig();
         $this->registerClassesNamespacesPrefix();
     }
@@ -47,6 +49,24 @@ class WaterServiceProvider extends ServiceProvider
     public function registerExceptionHandler()
     {
         $this->app->singleton(ExceptionHandlerContract::class, ExceptionHandler::class);
+    }
+
+    /**
+     * Register the Redirector service.
+     *
+     * @return void
+     */
+    protected function registerRedirector()
+    {
+        $this->app->singleton('water.redirect', function ($app) {
+            $redirector = new Redirector($app['url']);
+
+            if (isset($app['session.store'])) {
+                $redirector->setSession($app['session.store']);
+            }
+
+            return $redirector;
+        });
     }
 
     /**
