@@ -37,8 +37,5 @@ export default class Water {
         }
       })
     }).$mount(root)
-
-    console.log(app.$url('login'))
-    console.log(app.$url('/'))
   }
 }
