@@ -1,6 +1,6 @@
 <?php
 
-namespace WaterAdmin\Middleware;
+namespace WaterAdmin\Http\Middleware;
 
 use Closure;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;

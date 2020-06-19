@@ -41,7 +41,7 @@ class Water
      */
     public static function routes()
     {
-        Route::namespace('\WaterAdmin\Controllers')
+        Route::namespace('\WaterAdmin\Http\Controllers')
             ->group(__DIR__.'/../routes/water.php');
 
         foreach (static::$pluginRoutesPath as $path) {

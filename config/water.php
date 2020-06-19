@@ -63,7 +63,7 @@ return [
 
     'middleware' => [
         'web',
-        \WaterAdmin\Middleware\InertiaRequest::class,
+        \WaterAdmin\Http\Middleware\InertiaRequest::class,
     ],
 
     /*

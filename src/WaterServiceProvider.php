@@ -7,8 +7,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use WaterAdmin\Component;
 use WaterAdmin\Exceptions\Handler as ExceptionHandler;
-use WaterAdmin\Middleware\Authenticate;
-use WaterAdmin\Middleware\RedirectIfAuthenticated;
+use WaterAdmin\Http\Middleware\Authenticate;
+use WaterAdmin\Http\Middleware\RedirectIfAuthenticated;
 use WaterAdmin\Routing\Redirector;
 
 class WaterServiceProvider extends ServiceProvider

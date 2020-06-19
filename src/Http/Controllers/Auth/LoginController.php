@@ -1,6 +1,6 @@
 <?php
 
-namespace WaterAdmin\Controllers\Auth;
+namespace WaterAdmin\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
 use WaterAdmin\Auth\AuthenticatesUsers;
