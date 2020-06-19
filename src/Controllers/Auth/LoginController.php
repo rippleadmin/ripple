@@ -23,7 +23,7 @@ class LoginController extends Controller
      *
      * @var int|float|int[]|float[]
      */
-    protected $decayMinutes = [1, 3, 5];
+    protected $decayMinutes = 1;
 
     /**
      * Get the rate limiter instance.
