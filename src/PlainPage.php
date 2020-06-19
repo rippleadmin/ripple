@@ -5,6 +5,8 @@ namespace WaterAdmin;
 use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Support\Traits\Macroable;
 use Inertia\Inertia;
+use InvalidArgumentException;
+use WaterAdmin\Component;
 use WaterAdmin\Components\AbstractComponent;
 
 class PlainPage extends AbstractComponent implements Responsable
@@ -37,6 +39,40 @@ class PlainPage extends AbstractComponent implements Responsable
     public function title(string $title)
     {
         $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Add the page row content.
+     *
+     * @param  array|\WaterAdmin\Component  $content
+     * @return void
+     */
+    public function row($content)
+    {
+        if (is_array($content)) {
+            //
+        } elseif ($content instanceof Component) {
+            //
+        } else {
+            throw new InvalidArgumentException(
+                sprintf('The argument $content must be an instance of %s or array.', Component::class)
+            );
+        }
+
+        return $this;
+    }
+
+    /**
+     * Add the page content.
+     *
+     * @param  \WaterAdmin\Component  $content
+     * @return void
+     */
+    public function content(Component $content)
+    {
+        //
 
         return $this;
     }

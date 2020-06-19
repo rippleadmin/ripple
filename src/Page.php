@@ -3,7 +3,6 @@
 namespace WaterAdmin;
 
 use Illuminate\Support\Traits\Macroable;
-use InvalidArgumentException;
 use WaterAdmin\Concerns\HasWaterDrop;
 use WaterAdmin\Concerns\HasWaterModel;
 
@@ -14,48 +13,12 @@ class Page extends PlainPage
         HasWaterDrop;
 
     /**
-     * Add the page row content.
+     * Get this page fields.
      *
-     * @param  array|\WaterAdmin\Component  $content
-     * @return void
+     * @return array
      */
-    public function row($content)
+    public function getFields()
     {
-        if (is_array($content)) {
-            //
-        } elseif ($content instanceof Component) {
-            //
-        } else {
-            throw new InvalidArgumentException(
-                sprintf('The argument $content must be an instance of %s or array.', Component::class)
-            );
-        }
-
-        return $this;
+        return $this->waterDrop->getFields();
     }
-
-    /**
-     * Add the page content.
-     *
-     * @param  \WaterAdmin\Component  $content
-     * @return void
-     */
-    public function content(Component $content)
-    {
-        //
-
-        return $this;
-    }
-
-    // /**
-    //  * Get the page model fields.
-    //  *
-    //  * @return array
-    //  */
-    // public function getFields()
-    // {
-    //     if ($this->waterModel instanceof Fieldable) {
-    //         return $this->waterModel->getFields();
-    //     }
-    // }
 }
