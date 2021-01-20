@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class WaterAdminDatabaseSeeder extends Seeder
+class RippleAdminDatabaseSeeder extends Seeder
 {
     /**
      * Seed the application's database.
@@ -11,6 +11,6 @@ class WaterAdminDatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(WaterUserSeeder::class);
+        $this->call(RippleUserSeeder::class);
     }
 }

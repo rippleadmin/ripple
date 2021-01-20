@@ -1,12 +1,12 @@
 <?php
 
-namespace WaterAdmin\Auth;
+namespace RippleAdmin\Auth;
 
 use Illuminate\Foundation\Auth\AuthenticatesUsers as BaseAuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
-use WaterAdmin\Cache\RateLimiter;
+use RippleAdmin\Cache\RateLimiter;
 
 trait AuthenticatesUsers
 {
@@ -50,7 +50,7 @@ trait AuthenticatesUsers
     /**
      * Get the rate limiter instance.
      *
-     * @return \WaterAdmin\Cache\RateLimiter
+     * @return \RippleAdmin\Cache\RateLimiter
      */
     protected function limiter()
     {
@@ -64,7 +64,7 @@ trait AuthenticatesUsers
      */
     protected function guard()
     {
-        return Auth::guard('water');
+        return Auth::guard('ripple');
     }
 }
 

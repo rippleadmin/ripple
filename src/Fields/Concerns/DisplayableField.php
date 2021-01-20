@@ -1,6 +1,6 @@
 <?php
 
-namespace WaterAdmin\Fields\Concerns;
+namespace RippleAdmin\Fields\Concerns;
 
 trait DisplayableField
 {
@@ -29,7 +29,7 @@ trait DisplayableField
      *
      * @param  mixed  $value
      * @param  \Illuminate\Database\Eloquent\Model  $model
-     * @return string|\WaterAdmin\Component
+     * @return string|\RippleAdmin\Component
      */
     public function callRenderDisplayable($value, Model $model)
     {

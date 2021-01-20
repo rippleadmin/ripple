@@ -1,11 +1,11 @@
 <?php
 
-namespace WaterAdmin\Http\Controllers\Auth;
+namespace RippleAdmin\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
-use WaterAdmin\Auth\AuthenticatesUsers;
-use WaterAdmin\Cache\RateLimiter;
-use WaterAdmin\Controllers\Controller;
+use RippleAdmin\Auth\AuthenticatesUsers;
+use RippleAdmin\Cache\RateLimiter;
+use RippleAdmin\Http\Controllers\Controller;
 
 class LoginController extends Controller
 {
@@ -28,7 +28,7 @@ class LoginController extends Controller
     /**
      * Get the rate limiter instance.
      *
-     * @return \WaterAdmin\Cache\RateLimiter
+     * @return \RippleAdmin\Cache\RateLimiter
      */
     protected function limiter()
     {
@@ -57,7 +57,7 @@ class LoginController extends Controller
      */
     public function redirectTo()
     {
-        return route('water.home');
+        return route('ripple.home');
     }
 
     /**
@@ -67,6 +67,6 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('water.guest')->except('logout');
+        $this->middleware('ripple.guest')->except('logout');
     }
 }

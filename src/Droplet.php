@@ -1,20 +1,20 @@
 <?php
 
-namespace WaterAdmin;
+namespace RippleAdmin;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Arr;
+use Illuminate\Routing\Router;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
-use WaterAdmin\Concerns\HasOperations;
-use WaterAdmin\Concerns\HasPages;
-use WaterAdmin\Concerns\HasWaterModel;
-use WaterAdmin\Fields\Concerns\FieldsValues;
+use RippleAdmin\Concerns\HasOperations;
+use RippleAdmin\Concerns\HasPages;
+use RippleAdmin\Concerns\HasWater;
+use RippleAdmin\Fields\Concerns\FieldsValues;
 
-abstract class WaterDrop
+abstract class Droplet
 {
     use Macroable,
-        HasWaterModel,
+        HasWater,
         HasPages,
         HasOperations,
         FieldsValues;
@@ -34,7 +34,7 @@ abstract class WaterDrop
     protected $modelKeyValue;
 
     /**
-     * Create a new water drop instance.
+     * Create a new droplet instance.
      *
      * @return void
      */
@@ -43,6 +43,14 @@ abstract class WaterDrop
         $this->bootPages();
         $this->bootOperations();
     }
+
+    /**
+     * Define the routes of the droplet.
+     *
+     * @param  \Illuminate\Routing\Router  $router
+     * @return void
+     */
+    abstract protected function routes(Router $router);
 
     /**
      * Get the eloquent model.

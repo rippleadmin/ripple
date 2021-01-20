@@ -1,6 +1,6 @@
 <?php
 
-namespace WaterAdmin;
+namespace RippleAdmin;
 
 class Asset
 {

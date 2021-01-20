@@ -1,6 +1,6 @@
 <?php
 
-namespace WaterAdmin\Contracts\Field;
+namespace RippleAdmin\Contracts\Field;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,7 +11,7 @@ interface Displayable
      *
      * @param  mixed  $value
      * @param  \Illuminate\Database\Eloquent\Model  $model
-     * @return string|\WaterAdmin\Component
+     * @return string|\RippleAdmin\Component
      */
     public function renderDisplayable($value, Model $model);
 }

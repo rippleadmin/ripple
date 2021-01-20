@@ -1,6 +1,6 @@
 <?php
 
-namespace WaterAdmin\Http\Middleware;
+namespace RippleAdmin\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Config;
@@ -18,17 +18,17 @@ class InertiaRequest
      */
     public function handle($request, Closure $next)
     {
-        Inertia::setRootView('water-admin::layout');
+        Inertia::setRootView('ripple-admin::layout');
 
         Inertia::share([
             'app' => function () {
                 return [
-                    'name' => Config::get('water.name'),
+                    'name' => Config::get('ripple.name'),
                 ];
             },
             'url' => function () {
                 return [
-                    'prefix' => Config::get('water.prefix'),
+                    'prefix' => Config::get('ripple.prefix'),
                 ];
             },
             'errors' => function () {

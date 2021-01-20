@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use WaterAdmin\Models\User;
+use RippleAdmin\Models\User;
 
-class WaterUserSeeder extends Seeder
+class RippleUserSeeder extends Seeder
 {
     /**
      * Run the database seeds.

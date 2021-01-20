@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import { InertiaApp } from '@inertiajs/inertia-vue'
-import { firstModule, waterUrl } from './util'
+import { firstModule, adminUrl } from './util'
 
-export default class Water {
+export default class Ripple {
   constructor() {
     this.pagesCallable = []
   }
@@ -20,13 +20,13 @@ export default class Water {
     components.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], components(key).default))
   }
 
-  initInertiaApp() {
+  initialApp() {
     const root = document.getElementById('app')
     const page = JSON.parse(root.dataset.page)
 
     Vue.use(InertiaApp)
 
-    Vue.prototype.$url = path => waterUrl(path, page)
+    Vue.prototype.$url = path => adminUrl(path, page)
     Vue.prototype.$route = (...args) => route(...args).url()
 
     window.app = new Vue({

@@ -1,6 +1,6 @@
 <?php
 
-namespace WaterAdmin\Fields\Concerns;
+namespace RippleAdmin\Fields\Concerns;
 
 trait EditableField
 {
@@ -29,7 +29,7 @@ trait EditableField
      *
      * @param  mixed  $value
      * @param  \Illuminate\Database\Eloquent\Model  $model
-     * @return string|\WaterAdmin\Component
+     * @return string|\RippleAdmin\Component
      */
     public function callRenderEditable($value, Model $model)
     {

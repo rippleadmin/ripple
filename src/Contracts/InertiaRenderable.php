@@ -1,6 +1,6 @@
 <?php
 
-namespace WaterAdmin\Contracts;
+namespace RippleAdmin\Contracts;
 
 use Illuminate\Contracts\Support\Arrayable;
 

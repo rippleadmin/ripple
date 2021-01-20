@@ -4,22 +4,22 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Water Admin Name
+    | Ripple Admin Name
     |--------------------------------------------------------------------------
     |
-    | This is the Water Admin main title.
+    | This is the Ripple Admin main title.
     |
     */
 
-    'name' => 'Water Admin',
+    'name' => 'Ripple Admin',
 
     /*
     |--------------------------------------------------------------------------
-    | Water Admin Domain
+    | Ripple Admin Domain
     |--------------------------------------------------------------------------
     |
-    | This is the subdomain where Water Admin will be accessible from. If this
-    | setting is null, Water Admin will reside under the same domain as the
+    | This is the subdomain where Ripple Admin will be accessible from. If this
+    | setting is null, Ripple Admin will reside under the same domain as the
     | application. Otherwise, this value will serve as the subdomain.
     |
     */
@@ -28,10 +28,10 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Water Admin Prefix
+    | Ripple Admin Prefix
     |--------------------------------------------------------------------------
     |
-    | This is the URI prefix where Water Admin will be accessible from. Feel
+    | This is the URI prefix where Ripple Admin will be accessible from. Feel
     | free to change this prefix to anything you like. Note that the URI will
     | not affect the paths of its internal API that aren't exposed to users.
     |
@@ -41,21 +41,21 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Water Admin Controller Namespace
+    | Ripple Admin Controller Namespace
     |--------------------------------------------------------------------------
     |
-    | This is the controller namespace of Water Admin.
+    | This is the controller namespace of Ripple Admin.
     |
     */
 
-    'controller' => '\App\Water\Controllers',
+    'controller' => '\Admin\Controllers',
 
     /*
     |--------------------------------------------------------------------------
-    | Water Admin Route Middleware
+    | Ripple Admin Route Middleware
     |--------------------------------------------------------------------------
     |
-    | These middleware will get attached onto each Water Admin route, giving
+    | These middleware will get attached onto each Ripple Admin route, giving
     | you the chance to add your own middleware to this list or change any of
     | the existing middleware. Or, you can simply stick with this list.
     |
@@ -63,33 +63,33 @@ return [
 
     'middleware' => [
         'web',
-        \WaterAdmin\Http\Middleware\InertiaRequest::class,
+        \RippleAdmin\Http\Middleware\InertiaRequest::class,
     ],
 
     /*
     |--------------------------------------------------------------------------
-    | Water Admin Authentication
+    | Ripple Admin Authentication
     |--------------------------------------------------------------------------
     |
-    | This is define the Water Admin authentication config. More reference
+    | This is define the Ripple Admin authentication config. More reference
     | the Laravel auth config.
     |
     */
 
     'auth' => [
-        'guard' => 'water',
+        'guard' => 'ripple',
 
         'guards' => [
-            'water' => [
+            'ripple' => [
                 'driver' => 'session',
-                'provider' => 'water_users',
+                'provider' => 'ripple_users',
             ],
         ],
 
         'providers' => [
-            'water_users' => [
+            'ripple_users' => [
                 'driver' => 'eloquent',
-                'model' => \WaterAdmin\Models\User::class,
+                'model' => \RippleAdmin\Models\User::class,
             ],
         ],
     ],

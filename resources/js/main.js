@@ -1,1 +1,1 @@
-Water.components(() => require.context('./Components', true, /\.(js|vue)$/i))
+Ripple.components(() => require.context('./Components', true, /\.(js|vue)$/i))

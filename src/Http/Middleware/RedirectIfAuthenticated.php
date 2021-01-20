@@ -1,6 +1,6 @@
 <?php
 
-namespace WaterAdmin\Http\Middleware;
+namespace RippleAdmin\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
@@ -16,8 +16,8 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::guard('water')->check()) {
-            return redirect(route('water.home'));
+        if (Auth::guard('ripple')->check()) {
+            return redirect(route('ripple.home'));
         }
 
         return $next($request);

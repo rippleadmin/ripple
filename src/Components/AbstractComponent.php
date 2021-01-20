@@ -1,9 +1,9 @@
 <?php
 
-namespace WaterAdmin\Components;
+namespace RippleAdmin\Components;
 
 use Illuminate\Support\Traits\Macroable;
-use WaterAdmin\Concerns\RelativeClassName;
+use RippleAdmin\Concerns\RelativeClassName;
 
 abstract class AbstractComponent
 {

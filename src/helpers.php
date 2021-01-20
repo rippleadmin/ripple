@@ -15,37 +15,37 @@ if (! function_exists('class_basename')) {
     }
 }
 
-if (! function_exists('water_url')) {
+if (! function_exists('ripple_url')) {
     /**
-     * Generate a url for the Water Admin.
+     * Generate a url for the Ripple Admin.
      *
      * @param  string  $path
      * @param  mixed  $parameters
      * @param  bool|null  $secure
      * @return string
      */
-    function water_url($path, $parameters = [], $secure = null)
+    function ripple_url($path, $parameters = [], $secure = null)
     {
-        return url(config('water.prefix').'/'.ltrim($path, '/'), $parameters, $secure);
+        return url(config('ripple.prefix').'/'.ltrim($path, '/'), $parameters, $secure);
     }
 }
 
-if (! function_exists('water_redirect')) {
+if (! function_exists('ripple_redirect')) {
     /**
-     * Get an instance of the redirector for Water Admin.
+     * Get an instance of the redirector for Ripple Admin.
      *
      * @param  string|null  $to
      * @param  int  $status
      * @param  array  $headers
      * @param  bool|null  $secure
-     * @return \WaterAdmin\Routing\Redirector|\Illuminate\Http\RedirectResponse
+     * @return \RippleAdmin\Routing\Redirector|\Illuminate\Http\RedirectResponse
      */
-    function water_redirect($to = null, $status = 302, $headers = [], $secure = null)
+    function ripple_redirect($to = null, $status = 302, $headers = [], $secure = null)
     {
         if (is_null($to)) {
-            return app('water.redirect');
+            return app('ripple.redirect');
         }
 
-        return app('water.redirect')->to($to, $status, $headers, $secure);
+        return app('ripple.redirect')->to($to, $status, $headers, $secure);
     }
 }

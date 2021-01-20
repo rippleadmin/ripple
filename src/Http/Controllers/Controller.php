@@ -1,6 +1,6 @@
 <?php
 
-namespace WaterAdmin\Http\Controllers;
+namespace RippleAdmin\Http\Controllers;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;

@@ -1,141 +1,209 @@
 <?php
 
-namespace WaterAdmin;
+namespace RippleAdmin;
 
-use Illuminate\Support\Facades\Route;
+use Illuminate\Routing\Router;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
+use Illuminate\Support\Traits\Macroable;
+use ReflectionClass;
+use ReflectionMethod;
+use RippleAdmin\Concerns\HasOperations;
+use RippleAdmin\Concerns\HasPages;
+use RippleAdmin\Droplets\IndexDroplet;
+use RuntimeException;
 
-class Water
+abstract class Water
 {
-    /**
-     * The CSS assets include to Water Admin.
-     *
-     * @var \WaterAdmin\Asset[]
-     */
-    public static $css = [];
+    use Macroable,
+        HasPages,
+        HasOperations;
 
     /**
-     * The JS assets include to Water Admin.
+     * The original model class.
      *
-     * @var \WaterAdmin\Asset[]
+     * @var string
      */
-    public static $js = [];
+    protected $model;
 
     /**
-     * The assets for Water Admin.
+     * The original model instance.
      *
-     * @var \WaterAdmin\Asset[]
+     * @var \Illuminate\Database\Eloquent\Model
      */
-    public static $assets = [];
+    protected $modelInstance;
 
     /**
-     * The Water Admin plugin routes path.
+     * The droplets instance.
      *
      * @var array
      */
-    public static $pluginRoutesPath = [];
+    protected $droplets = [
+        'index' => IndexDroplet::class,
+        // 'show' => ShowDroplet::class,
+        // 'create' => CreateDroplet::class,
+        // 'edit' => EditDroplet::class,
+        // 'destroy' => DestroyDroplet::class,
+    ];
 
     /**
-     * Define the "water" routes for the application.
+     * Create a new water model instance.
      *
      * @return void
      */
-    public static function routes()
+    public function __construct()
     {
-        Route::namespace('\WaterAdmin\Http\Controllers')
-            ->group(__DIR__.'/../routes/water.php');
+        $this->bootDroplets();
+        $this->boot();
+    }
 
-        foreach (static::$pluginRoutesPath as $path) {
-            Route::group([], $path);
+    /**
+     * Define the water model fields.
+     *
+     * @return \RippleAdmin\Field[]
+     */
+    abstract public function fields();
+
+    /**
+     * Bootstrap model.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        //
+    }
+
+    /**
+     * Get the base eloquent model instance.
+     *
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function eloquent()
+    {
+        if (! $this->modelInstance) {
+            $this->modelInstance = app($this->model);
+        }
+
+        return $this->modelInstance;
+    }
+
+    /**
+     * Get all droplets instance.
+     *
+     * @return array
+     */
+    public function droplets()
+    {
+        return $this->droplets;
+    }
+
+    /**
+     * Get the droplet instance.
+     *
+     * @param  string  $name
+     * @return \RippleAdmin\Droplet
+     */
+    public function droplet(string $name)
+    {
+        return $this->droplets[$name];
+    }
+
+    /**
+     * Bootstrap all droplets instance.
+     *
+     * @return void
+     */
+    public function bootDroplets()
+    {
+        foreach ($this->droplets as $name => $droplet) {
+            if (method_exists(static::class, Str::camel($name))) {
+                throw new RuntimeException(
+                    sprintf('Droplet name "%s" is exists in %s::class.', $name, static::class)
+                );
+            }
+
+            /** @var \RippleAdmin\Droplet $droplet */
+            $droplet = app($droplet);
+            $droplet->fields($this->fields());
+
+            $this->addDroplet($name, $droplet);
+            // $this->addDroplet(
+            //     $name, $this->{Str::camel($name)}($droplet)
+            // );
+
+            static::mixinDroplet($droplet, ['routes']);
         }
     }
 
     /**
-     * Register the plugin routes file path.
+     * Add a new droplet instance.
      *
-     * @param  string  $path
-     * @return static
+     * @param  string  $name
+     * @param  string|\RippleAdmin\Droplet  $droplet
+     * @return $this
      */
-    public static function pluginRoutes(string $path)
+    public function addDroplet(string $name, Droplet $droplet)
     {
-        static::$pluginRoutesPath[] = $path;
+        $this->droplets[$name] = $droplet;
+        $droplet->setWater($this);
 
-        return new static;
+        // Set pages from droplets
+        foreach ($droplet->pages() as $name => $page) {
+            $this->addPage($name, $page);
+            $page->setWater($this);
+        }
+
+        // Set operations from droplets
+        foreach ($droplet->operations() as $name => $operation) {
+            $this->addOperation($name, $operation);
+            $operation->setWater($this);
+        }
+
+        return $this;
+    }
+
+    public static function mixinDroplet(Droplet $droplet, array $except = [], $replace = true)
+    {
+        $methods = Arr::except((new ReflectionClass($droplet))->getMethods(
+            ReflectionMethod::IS_PUBLIC
+        ), $except);
+
+        foreach ($methods as $method) {
+            if ($replace || ! static::hasMacro($method->name)) {
+                static::macro($method->name, fn () => $method->invoke($droplet));
+            }
+        }
+    }
+
+    public function registerRoute(Router $router, string $routePrefix)
+    {
+        $router->prefix($routePrefix)->group(function (Router $router) {
+            $this->registerDropletsRoute($router);
+            $this->routes($router);
+        });
+    }
+
+    protected function registerDropletsRoute(Router $router)
+    {
+        foreach ($this->droplets as $droplet) {
+            $router->droplet($droplet);
+        }
+    }
+
+    public function action(string $action)
+    {
+        return [static::class, $action];
     }
 
     /**
-     * Add the CSS files include to Water Admin.
+     * Define the routes of the water model.
      *
-     * @param  string  $path
-     * @param  string  $manifestDirectory
-     * @return static
+     * @param  \Illuminate\Routing\Router  $router
+     * @return void
      */
-    public static function css(string $path, string $manifestDirectory = '')
+    protected function routes(Router $router)
     {
-        static::$css[] = new Asset($path, $manifestDirectory);
-
-        return new static;
-    }
-
-    /**
-     * Add the JS files include to Water Admin.
-     *
-     * @param  string  $path
-     * @param  string  $manifestDirectory
-     * @return static
-     */
-    public static function js(string $path, string $manifestDirectory = '')
-    {
-        static::$js[] = new Asset($path, $manifestDirectory);
-
-        return new static;
-    }
-
-    /**
-     * Add the asset to Water Admin.
-     *
-     * @param  string  $path
-     * @param  string  $manifestDirectory
-     * @return static
-     */
-    public static function asset(string $path, string $manifestDirectory = '')
-    {
-        static::$assets[] = new Asset($path, $manifestDirectory);
-
-        return new static;
-    }
-
-    /**
-     * Get the Water Admin styles assets instance.
-     *
-     * @return array
-     */
-    public static function styles()
-    {
-        return static::$css;
-    }
-
-    /**
-     * Get the Water Admin scripts assets instance.
-     *
-     * @return array
-     */
-    public static function scripts()
-    {
-        return static::$js;
-    }
-
-    /**
-     * Get the Water Admin asset instance.
-     *
-     * @param  string  $path
-     * @return \WaterAdmin\Asset|null
-     */
-    protected function getAsset(string $path)
-    {
-        return array_merge(
-            static::$assets,
-            static::$css,
-            static::$js
-        )[$path] ?? null;
+        //
     }
 }

@@ -1,5 +1,5 @@
 {
-    "name": "water-admin/water-admin",
+    "name": "rippleadmin/ripple",
     "description": "Quick and easy to customize admin panel for Laravel.",
     "type": "library",
     "license": "MIT",
@@ -15,7 +15,7 @@
         "customize",
         "generator"
     ],
-    "homepage": "https://github.com/water-admin/water-admin",
+    "homepage": "https://github.com/rippleadmin/ripple",
     "require": {
         "php": "^7.1.3",
         "additionapps/flexible-presenter": "^2.0",
@@ -33,7 +33,7 @@
     },
     "autoload": {
         "psr-4": {
-            "WaterAdmin\\": "src"
+            "RippleAdmin\\": "src"
         },
         "classmap": [
             "database/seeds",
@@ -45,16 +45,16 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "WaterAdmin\\Test\\": "tests"
+            "RippleAdmin\\Test\\": "tests"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "WaterAdmin\\WaterServiceProvider"
+                "RippleAdmin\\RippleServiceProvider"
             ],
             "aliases": {
-                "Water": "WaterAdmin\\Water"
+                "Ripple": "RippleAdmin\\Ripple"
             }
         }
     },

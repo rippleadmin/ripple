@@ -1,10 +1,10 @@
 <?php
 
-namespace WaterAdmin;
+namespace RippleAdmin;
 
 use AdditionApps\FlexiblePresenter\FlexiblePresenter;
 
-class WaterFlexiblePresenter extends FlexiblePresenter
+class RippleFlexiblePresenter extends FlexiblePresenter
 {
     /**
      * Define the presenter values.

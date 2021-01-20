@@ -1,9 +1,9 @@
 <?php
 
-namespace WaterAdmin\Concerns;
+namespace RippleAdmin\Concerns;
 
-use WaterAdmin\Page;
-use WaterAdmin\WaterDrop;
+use RippleAdmin\Page;
+use RippleAdmin\Droplet;
 
 trait HasPages
 {
@@ -28,7 +28,7 @@ trait HasPages
      * Get the page instance.
      *
      * @param  string  $name
-     * @return \WaterAdmin\Page
+     * @return \RippleAdmin\Page
      */
     public function page(string $name)
     {
@@ -39,7 +39,7 @@ trait HasPages
      * Add a new page instance.
      *
      * @param  string  $name
-     * @param  \WaterAdmin\Page  $page
+     * @param  \RippleAdmin\Page  $page
      * @return $this
      */
     public function addPage(string $name, Page $page)
@@ -50,20 +50,20 @@ trait HasPages
     }
 
     /**
-     * Bootstrap all water drops instance.
+     * Bootstrap all droplets instance.
      *
      * @return $this
      */
     public function bootPages()
     {
         foreach ($this->pages as $name => $page) {
-            /** @var \WaterAdmin\Page $page */
+            /** @var \RippleAdmin\Page $page */
             $page = app($page);
 
             $this->addPage($name, $page);
 
-            if ($this instanceof WaterDrop) {
-                $page->setWaterDrop($this);
+            if ($this instanceof Droplet) {
+                $page->setDroplet($this);
             }
 
             $page->boot();

@@ -1,6 +1,6 @@
 <?php
 
-namespace WaterAdmin\Http\Controllers;
+namespace RippleAdmin\Http\Controllers;
 
 use Inertia\Inertia;
 

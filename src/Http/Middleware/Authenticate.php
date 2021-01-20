@@ -1,6 +1,6 @@
 <?php
 
-namespace WaterAdmin\Http\Middleware;
+namespace RippleAdmin\Http\Middleware;
 
 use Closure;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
@@ -12,13 +12,16 @@ class Authenticate extends Middleware
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
+     * @param  string[]  ...$guards
      * @return mixed
      *
      * @throws \Illuminate\Auth\AuthenticationException
      */
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next, ...$guards)
     {
-        $this->authenticate($request, ['water']);
+        $this->authenticate($request, [
+            config('ripple.auth.guard'),
+        ]);
 
         return $next($request);
     }
@@ -32,7 +35,7 @@ class Authenticate extends Middleware
     protected function redirectTo($request)
     {
         if (! $request->expectsJson()) {
-            return route('water.login');
+            return route('ripple.login');
         }
     }
 }

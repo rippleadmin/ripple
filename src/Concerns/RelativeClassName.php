@@ -1,6 +1,6 @@
 <?php
 
-namespace WaterAdmin\Concerns;
+namespace RippleAdmin\Concerns;
 
 trait RelativeClassName
 {

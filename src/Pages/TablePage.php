@@ -1,11 +1,12 @@
 <?php
 
-namespace WaterAdmin\Pages;
+namespace RippleAdmin\Pages;
 
 use Illuminate\Database\Eloquent\Model;
-use WaterAdmin\Contracts\Field\Displayable;
-use WaterAdmin\Field;
-use WaterAdmin\Page;
+use RippleAdmin\Components\Table;
+use RippleAdmin\Contracts\Field\Displayable;
+use RippleAdmin\Field;
+use RippleAdmin\Page;
 
 class TablePage extends Page
 {
@@ -14,7 +15,7 @@ class TablePage extends Page
      *
      * @var string
      */
-    protected $name = 'Table';
+    protected $name = 'List/Table';
 
     /**
      * Bootstrap the page instance.
@@ -31,12 +32,12 @@ class TablePage extends Page
      *
      * @return array
      */
-    public function props()
+    public function pageProps()
     {
         return [
-            'title' => $this->title,
-            'columns' => $this->columns(),
-            'data' => $this->data(),
+            'table' => Table::make()
+                ->setColumns($this->columns())
+                ->setData($this->data()),
         ];
     }
 
@@ -47,7 +48,7 @@ class TablePage extends Page
      */
     public function columns()
     {
-        return $this->waterDrop->getFieldsLabel();
+        return $this->droplet->getFieldsLabel();
     }
 
     /**
@@ -57,13 +58,13 @@ class TablePage extends Page
      */
     public function data()
     {
-        return $this->waterDrop->transformCollection(
-            $this->waterDrop->getModels(),
+        return $this->droplet->transformCollection(
+            $this->droplet->getModels(),
             function (Model $model, Field $field) {
                 if ($field instanceof Displayable) {
                     $key = $field->key();
                     $component = $field->renderDisplayable(
-                        $this->waterDrop->getModelAttribute($model, $key), $model
+                        $this->droplet->getModelAttribute($model, $key), $model
                     );
 
                     return [$key => $component];

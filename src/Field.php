@@ -1,6 +1,6 @@
 <?php
 
-namespace WaterAdmin;
+namespace RippleAdmin;
 
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;

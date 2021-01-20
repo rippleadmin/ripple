@@ -4,10 +4,10 @@ const path = require('path')
 
 mix.setPublicPath('public')
   .js('resources/js/main.js', 'public/js')
-  .js('resources/js/water-admin.js', 'public/js')
+  .js('resources/js/ripple-admin.js', 'public/js')
   .webpackConfig({
     output: {
-      publicPath: '/vendor/water-admin/',
+      publicPath: '/vendor/ripple-admin/',
       chunkFilename: 'js/[name].js?id=[chunkhash]'
     },
     resolve: {
@@ -21,13 +21,13 @@ mix.setPublicPath('public')
   .sourceMaps()
 
 // Auto copy assets to test Laravel project
-fs.access('../water-admin-test', error => {
+fs.access('../ripple-test', error => {
   if (!error) {
     mix.then(() => {
       // Run Laravel Mix copy file method
       new (require('laravel-mix/src/tasks/CopyFilesTask'))({
         from: 'public',
-        to: new File('../water-admin-test/public/vendor/water-admin')
+        to: new File('../ripple-test/public/vendor/ripple-admin')
       }).run()
     })
   }

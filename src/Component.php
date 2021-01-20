@@ -1,10 +1,10 @@
 <?php
 
-namespace WaterAdmin;
+namespace RippleAdmin;
 
 use JsonSerializable;
-use WaterAdmin\Components\AbstractComponent;
-use WaterAdmin\Contracts\InertiaRenderable;
+use RippleAdmin\Components\AbstractComponent;
+use RippleAdmin\Contracts\InertiaRenderable;
 
 abstract class Component extends AbstractComponent implements JsonSerializable, InertiaRenderable
 {

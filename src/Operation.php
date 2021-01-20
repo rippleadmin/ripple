@@ -1,17 +1,17 @@
 <?php
 
-namespace WaterAdmin;
+namespace RippleAdmin;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Traits\Macroable;
-use WaterAdmin\Concerns\HasWaterDrop;
-use WaterAdmin\Concerns\HasWaterModel;
+use RippleAdmin\Concerns\HasDroplet;
+use RippleAdmin\Concerns\HasWater;
 
 abstract class Operation
 {
     use Macroable,
-        HasWaterModel,
-        HasWaterDrop;
+        HasWater,
+        HasDroplet;
 
     /**
      * Handle the operation.

@@ -1,4 +1,4 @@
 import Vue from 'vue'
-import './Water'
+import './Ripple'
 
 window.Vue = Vue

@@ -1,6 +1,8 @@
 <?php
 
-namespace WaterAdmin\Components;
+namespace RippleAdmin\Components;
+
+use RippleAdmin\Component;
 
 class Table extends Component
 {
@@ -9,7 +11,7 @@ class Table extends Component
      *
      * @var string
      */
-    protected $name = 'Table';
+    protected $name = 'WTable';
 
     /**
      * The table columns.

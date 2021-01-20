@@ -1,6 +1,6 @@
 <?php
 
-namespace WaterAdmin\Cache;
+namespace RippleAdmin\Cache;
 
 use Illuminate\Cache\RateLimiter as BaseRateLimiter;
 
@@ -16,7 +16,7 @@ class RateLimiter extends BaseRateLimiter
     public function tooManyAttempts($key, $maxAttempts)
     {
         if ($this->attempts($key) >= $maxAttempts) {
-            if ($this->cache->has($key.':water_admin_timer')) {
+            if ($this->cache->has($key.':ripple_admin_timer')) {
                 return true;
             }
 
@@ -36,21 +36,21 @@ class RateLimiter extends BaseRateLimiter
     public function hit($key, $decaySeconds = 60)
     {
         if (is_array($decaySeconds)) {
-            if (! $this->cache->has($key.':water_admin_timer')) {
-                if (! $this->cache->has($key.':water_admin_step')) {
-                    $this->cache->add($key.':water_admin_step', 0, 86400);
+            if (! $this->cache->has($key.':ripple_admin_timer')) {
+                if (! $this->cache->has($key.':ripple_admin_step')) {
+                    $this->cache->add($key.':ripple_admin_step', 0, 86400);
                 } else {
-                    $this->cache->increment($key.':water_admin_step');
+                    $this->cache->increment($key.':ripple_admin_step');
                 }
             }
 
-            $step = $this->cache->get($key.':water_admin_step', 0);
+            $step = $this->cache->get($key.':ripple_admin_step', 0);
             $step = $step < count($decaySeconds) ? $step : count($decaySeconds) - 1;
             $decaySeconds = $decaySeconds[$step];
         }
 
         $this->cache->add(
-            $key.':water_admin_timer', $this->availableAt($decaySeconds), $decaySeconds
+            $key.':ripple_admin_timer', $this->availableAt($decaySeconds), $decaySeconds
         );
 
         $added = $this->cache->add($key, 0, $decaySeconds);
@@ -72,11 +72,11 @@ class RateLimiter extends BaseRateLimiter
      */
     public function clear($key)
     {
-        $this->cache->forget($key.':water_admin_step');
+        $this->cache->forget($key.':ripple_admin_step');
 
         $this->resetAttempts($key);
 
-        $this->cache->forget($key.':water_admin_timer');
+        $this->cache->forget($key.':ripple_admin_timer');
     }
 
     /**
@@ -87,6 +87,6 @@ class RateLimiter extends BaseRateLimiter
      */
     public function availableIn($key)
     {
-        return $this->cache->get($key.':water_admin_timer') - $this->currentTime();
+        return $this->cache->get($key.':ripple_admin_timer') - $this->currentTime();
     }
 }

@@ -4,14 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
-    <title>Water Admin</title>
+    <title>Ripple Admin</title>
 
     <!-- Styles -->
-    @foreach (Water::styles() as $asset)
+    @foreach (Ripple::styles() as $asset)
     <link href="{{ asset(mix($asset->path(), $asset->manifestDirectory())) }}" rel="stylesheet">
     @endforeach
 
-    @routes('water')
+    @routes('ripple')
 </head>
 
 <body class="bg-purple-100">
@@ -19,15 +19,15 @@
     @inertia
 
     <!-- Scripts -->
-    <script src="{{ asset(mix('js/water-admin.js', 'vendor/water-admin')) }}"></script>
+    <script src="{{ asset(mix('js/ripple-admin.js', 'vendor/ripple-admin')) }}"></script>
 
-    @foreach (Water::scripts() as $asset)
+    @foreach (Ripple::scripts() as $asset)
     <script src="{{ asset(mix($asset->path(), $asset->manifestDirectory())) }}"></script>
     @endforeach
 
-    <script src="{{ asset(mix('js/main.js', 'vendor/water-admin')) }}"></script>
+    <script src="{{ asset(mix('js/main.js', 'vendor/ripple-admin')) }}"></script>
     <script>
-    Water.initInertiaApp();
+    Ripple.initialApp();
     </script>
 
 </body>

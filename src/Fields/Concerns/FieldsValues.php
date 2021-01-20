@@ -1,24 +1,24 @@
 <?php
 
-namespace WaterAdmin\Fields\Concerns;
+namespace RippleAdmin\Fields\Concerns;
 
 use AdditionApps\FlexiblePresenter\FlexiblePresenter;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
-use WaterAdmin\Field;
-use WaterAdmin\WaterFlexiblePresenter;
+use RippleAdmin\Field;
+use RippleAdmin\RippleFlexiblePresenter;
 
 trait FieldsValues
 {
     /**
-     * The water drop fields.
+     * The droplet fields.
      *
-     * @var \WaterAdmin\Field[]
+     * @var \RippleAdmin\Field[]
      */
     protected $fields = [];
 
     /**
-     * Set the water drop fields.
+     * Set the droplet fields.
      *
      * @param array $fields
      * @return void
@@ -41,9 +41,9 @@ trait FieldsValues
     }
 
     /**
-     * Get the water drop fields.
+     * Get the droplet fields.
      *
-     * @return \WaterAdmin\Field[]
+     * @return \RippleAdmin\Field[]
      */
     public function getFields()
     {
@@ -51,9 +51,9 @@ trait FieldsValues
     }
 
     /**
-     * Get the water drop field.
+     * Get the droplet field.
      *
-     * @return \WaterAdmin\Field|null
+     * @return \RippleAdmin\Field|null
      */
     public function field(string $name)
     {
@@ -128,7 +128,7 @@ trait FieldsValues
      * Add the field before the specified field.
      *
      * @param  string  $baseFieldKey
-     * @param  \WaterAdmin\Field  $field
+     * @param  \RippleAdmin\Field  $field
      * @return $this
      */
     public function before(string $baseFieldKey, Field $field)
@@ -146,7 +146,7 @@ trait FieldsValues
      * Add the field after the specified field.
      *
      * @param  string  $baseFieldKey
-     * @param  \WaterAdmin\Field  $field
+     * @param  \RippleAdmin\Field  $field
      * @return $this
      */
     public function after(string $baseFieldKey, Field $field)
@@ -163,14 +163,14 @@ trait FieldsValues
     /**
      * Get a dictionary keyed by primary keys.
      *
-     * @param  \WaterAdmin\Field[]  $items
+     * @param  \RippleAdmin\Field[]  $items
      * @return array
      */
     public function getFieldsDictionary($fields)
     {
         $dictionary = [];
 
-        /** @var \WaterAdmin\Field $field */
+        /** @var \RippleAdmin\Field $field */
         foreach ($fields as $field) {
             $dictionary[$field->key()] = $field;
         }
@@ -188,7 +188,7 @@ trait FieldsValues
     public function transformResource($data, callable $callback)
     {
         return $this->transformFields(
-            WaterFlexiblePresenter::make($data), $callback
+            RippleFlexiblePresenter::make($data), $callback
         );
     }
 
@@ -202,7 +202,7 @@ trait FieldsValues
     public function transformCollection($data, callable $callback)
     {
         return $this->transformFields(
-            WaterFlexiblePresenter::collection($data), $callback
+            RippleFlexiblePresenter::collection($data), $callback
         );
     }
 

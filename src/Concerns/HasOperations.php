@@ -1,10 +1,9 @@
 <?php
 
-namespace WaterAdmin\Concerns;
+namespace RippleAdmin\Concerns;
 
-use WaterAdmin\Operation;
-use WaterAdmin\WaterDrop;
-use WaterAdmin\WaterModel;
+use RippleAdmin\Operation;
+use RippleAdmin\Droplet;
 
 trait HasOperations
 {
@@ -29,7 +28,7 @@ trait HasOperations
      * Get the operation instance.
      *
      * @param  string  $name
-     * @return \WaterAdmin\Operation
+     * @return \RippleAdmin\Operation
      */
     public function operation(string $name)
     {
@@ -40,7 +39,7 @@ trait HasOperations
      * Add a new operation instance.
      *
      * @param  string  $name
-     * @param  \WaterAdmin\Operation  $operation
+     * @param  \RippleAdmin\Operation  $operation
      * @return $this
      */
     public function addOperation(string $name, Operation $operation)
@@ -58,13 +57,13 @@ trait HasOperations
     public function bootOperations()
     {
         foreach ($this->operations as $name => $operation) {
-            /** @var \WaterAdmin\Operation $operation */
+            /** @var \RippleAdmin\Operation $operation */
             $operation = app($operation);
 
             $this->addOperation($name, $operation);
 
-            if ($this instanceof WaterDrop) {
-                $operation->setWaterDrop($this);
+            if ($this instanceof Droplet) {
+                $operation->setDroplet($this);
             }
         }
 

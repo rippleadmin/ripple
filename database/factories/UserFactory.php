@@ -4,7 +4,7 @@
 
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
-use WaterAdmin\Models\User;
+use RippleAdmin\Models\User;
 
 $factory->define(User::class, function (Faker $faker) {
     return [

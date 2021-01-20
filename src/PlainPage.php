@@ -1,13 +1,13 @@
 <?php
 
-namespace WaterAdmin;
+namespace RippleAdmin;
 
 use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Support\Traits\Macroable;
 use Inertia\Inertia;
 use InvalidArgumentException;
-use WaterAdmin\Component;
-use WaterAdmin\Components\AbstractComponent;
+use RippleAdmin\Component;
+use RippleAdmin\Components\AbstractComponent;
 
 class PlainPage extends AbstractComponent implements Responsable
 {
@@ -46,7 +46,7 @@ class PlainPage extends AbstractComponent implements Responsable
     /**
      * Add the page row content.
      *
-     * @param  array|\WaterAdmin\Component  $content
+     * @param  array|\RippleAdmin\Component  $content
      * @return void
      */
     public function row($content)
@@ -67,7 +67,7 @@ class PlainPage extends AbstractComponent implements Responsable
     /**
      * Add the page content.
      *
-     * @param  \WaterAdmin\Component  $content
+     * @param  \RippleAdmin\Component  $content
      * @return void
      */
     public function content(Component $content)
@@ -75,18 +75,6 @@ class PlainPage extends AbstractComponent implements Responsable
         //
 
         return $this;
-    }
-
-    /**
-     * Create an HTTP response that represents the object.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function toResponse($request)
-    {
-        return Inertia::render($this->name(), $this->props())
-            ->toResponse($request);
     }
 
     /**
@@ -99,5 +87,17 @@ class PlainPage extends AbstractComponent implements Responsable
         return [
             'title' => $this->title,
         ];
+    }
+
+    /**
+     * Create an HTTP response that represents the object.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function toResponse($request)
+    {
+        return Inertia::render($this->name(), $this->props())
+            ->toResponse($request);
     }
 }

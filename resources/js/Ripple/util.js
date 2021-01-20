@@ -14,12 +14,12 @@ export async function firstModule(imports, ...args) {
 }
 
 /**
- * Get the Water Admin url.
+ * Get the Ripple Admin url.
  *
  * @param {strng} path
  * @param {object} page
  */
-export function waterUrl(path, page) {
+export function adminUrl(path, page) {
   return [
     location.origin,
     page.props.url.prefix,

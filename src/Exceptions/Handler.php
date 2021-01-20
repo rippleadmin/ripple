@@ -1,6 +1,6 @@
 <?php
 
-namespace WaterAdmin\Exceptions;
+namespace RippleAdmin\Exceptions;
 
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
@@ -65,6 +65,6 @@ class Handler extends ExceptionHandler
     {
         return $request->expectsJson()
                     ? response()->json(['message' => $exception->getMessage()], 401)
-                    : water_redirect()->guest($exception->redirectTo() ?? route('water.login'));
+                    : ripple_redirect()->guest($exception->redirectTo() ?? route('ripple.login'));
     }
 }

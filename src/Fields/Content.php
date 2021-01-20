@@ -1,13 +1,13 @@
 <?php
 
-namespace WaterAdmin\Fields;
+namespace RippleAdmin\Fields;
 
 use Illuminate\Database\Eloquent\Model;
-use WaterAdmin\Fields\Concerns\DisplayableField;
-use WaterAdmin\Fields\Concerns\EditableField;
-use WaterAdmin\Contracts\Field\Displayable;
-use WaterAdmin\Contracts\Field\Editable;
-use WaterAdmin\Field;
+use RippleAdmin\Fields\Concerns\DisplayableField;
+use RippleAdmin\Fields\Concerns\EditableField;
+use RippleAdmin\Contracts\Field\Displayable;
+use RippleAdmin\Contracts\Field\Editable;
+use RippleAdmin\Field;
 
 class Content extends Field implements Displayable, Editable
 {
@@ -19,7 +19,7 @@ class Content extends Field implements Displayable, Editable
      *
      * @param  mixed  $value
      * @param  \Illuminate\Database\Eloquent\Model  $model
-     * @return string|\WaterAdmin\Component
+     * @return string|\RippleAdmin\Component
      */
     public function renderDisplayable($value, Model $model)
     {
@@ -31,7 +31,7 @@ class Content extends Field implements Displayable, Editable
      *
      * @param  mixed  $value
      * @param  \Illuminate\Database\Eloquent\Model  $model
-     * @return string|\WaterAdmin\Component
+     * @return string|\RippleAdmin\Component
      */
     public function renderEditable($value, Model $model)
     {

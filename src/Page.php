@@ -1,16 +1,38 @@
 <?php
 
-namespace WaterAdmin;
+namespace RippleAdmin;
 
 use Illuminate\Support\Traits\Macroable;
-use WaterAdmin\Concerns\HasWaterDrop;
-use WaterAdmin\Concerns\HasWaterModel;
+use RippleAdmin\Concerns\HasDroplet;
+use RippleAdmin\Concerns\HasWater;
 
 class Page extends PlainPage
 {
     use Macroable,
-        HasWaterModel,
-        HasWaterDrop;
+        HasWater,
+        HasDroplet;
+
+    /**
+     * Get the page props.
+     *
+     * @return array
+     */
+    public function pageProps()
+    {
+        return [
+            //
+        ];
+    }
+
+    /**
+     * Get the page all props.
+     *
+     * @return array
+     */
+    public function props()
+    {
+        return array_merge(parent::props(), $this->pageProps());
+    }
 
     /**
      * Get this page fields.
@@ -19,6 +41,6 @@ class Page extends PlainPage
      */
     public function getFields()
     {
-        return $this->waterDrop->getFields();
+        return $this->droplet->getFields();
     }
 }
