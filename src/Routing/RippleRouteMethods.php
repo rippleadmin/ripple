@@ -24,21 +24,4 @@ class RippleRouteMethods
             $water->registerRoute($this, $prefix);
         };
     }
-
-    /**
-     * Register the routes of droplet.
-     *
-     * @param  string|\RippleAdmin\Droplet  $droplet
-     * @return callable
-     */
-    public function droplet()
-    {
-        return function ($droplet) {
-            if (! $droplet instanceof Droplet) {
-                $droplet = $this->container->make($droplet);
-            }
-
-            $droplet->routes($this);
-        };
-    }
 }

@@ -6,9 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
-use RippleAdmin\Concerns\HasOperations;
+use RippleAdmin\Concerns\HasActions;
 use RippleAdmin\Concerns\HasPages;
 use RippleAdmin\Concerns\HasWater;
+use RippleAdmin\Contracts\Field\Displayable;
 use RippleAdmin\Fields\Concerns\FieldsValues;
 
 abstract class Droplet
@@ -16,32 +17,26 @@ abstract class Droplet
     use Macroable,
         HasWater,
         HasPages,
-        HasOperations,
+        HasActions,
         FieldsValues;
 
     /**
-     * The model key name.
+     * Allows export methods of droplets.
      *
-     * @var string
+     * @var string[]
      */
-    protected $modelKey = 'id';
+    public $methods = [];
 
-    /**
-     * The model key value.
-     *
-     * @var string
-     */
-    protected $modelKeyValue;
+    /** @var \Illuminate\Database\Eloquent\Model */
+    protected $model;
+    protected $modelKeyName = 'id';
 
-    /**
-     * Create a new droplet instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    protected $perPage = 10;
+    protected $pagination = false;
+
+    public function __construct(Water $water)
     {
-        $this->bootPages();
-        $this->bootOperations();
+        $this->water = $water;
     }
 
     /**
@@ -53,56 +48,51 @@ abstract class Droplet
     abstract protected function routes(Router $router);
 
     /**
-     * Get the eloquent model.
+     * Set & get the eloquent model.
      *
-     * @param  string|null  $key
-     * @return \Illuminate\Database\Eloquent\Model|null
+     * @param  string|\Illuminate\Database\Eloquent\Model|null  $model
+     * @param  string|null  $field
+     * @return $this
      */
-    public function getModel(string $key = null)
+    public function model($model = null, string $field = null)
     {
-        return $this->eloquent()
-            ->query()
-            ->where($key ?? $this->getModelKey(), $this->getModelKeyValue())
-            ->first();
+        if (! is_null($model)) {
+            if (! $model instanceof Model) {
+                $model = $this->eloquent()
+                    ->query()
+                    ->where($field ?? $this->getModelKeyName(), $model)
+                    ->first();
+            }
+
+            $this->model = $model;
+        }
+
+        return $this->model;
     }
 
     /**
      * Get all eloquent models.
      *
-     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model[]
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function getModels()
+    public function models()
     {
-        // Auto eager load relationships
-        $eagerLoadFields = array_filter($this->fields, function (Field $field) {
-            return strpos($field->key(), '.') !== false;
-        });
+        $query = $this->eloquent()
+            ->with($this->eagerLoadFields());
 
-        $eagerLoadFields = array_map(function (Field $field) {
-            return Str::beforeLast($field->key(), '.');
-        }, $eagerLoadFields);
-
-        return $this->eloquent()->with($eagerLoadFields)->get();
+        return $this->pagination
+            ? $query->paginate($this->perPage)
+            : $query->get();
     }
 
     /**
      * Get the model key name.
      *
-     * @return void
+     * @return string
      */
-    public function getModelKey()
+    public function getModelKeyName()
     {
-        return $this->modelKey;
-    }
-
-    /**
-     * Get the model key value.
-     *
-     * @return void
-     */
-    public function getModelKeyValue()
-    {
-        return $this->modelKeyValue;
+        return $this->modelKeyName;
     }
 
     /**
@@ -121,5 +111,52 @@ abstract class Droplet
         }
 
         return $attribute;
+    }
+
+    /**
+     * Get the auto eager load relationships.
+     *
+     * @return \RippleAdmin\Field[]
+     */
+    public function eagerLoadFields()
+    {
+        $eagerLoadFields = array_filter($this->fields, function (Field $field) {
+            return Str::contains($field->key(), '.');
+        });
+
+        return array_map(function (Field $field) {
+            return Str::beforeLast($field->key(), '.');
+        }, $eagerLoadFields);
+    }
+
+    /**
+     * Transform the resource / collection data with fields.
+     *
+     * @param  callable  $callback
+     * @return array
+     */
+    public function transform(callable $callback)
+    {
+        return $this->model
+            ? $this->transformResource($this->model(), $callback)
+            : $this->transformCollection($this->models(), $callback);
+    }
+
+    /**
+     * Build the model / models data.
+     *
+     * @return array
+     */
+    public function buildModelData()
+    {
+        return $this->transform(function (Model $model, Field $field) {
+            if ($field instanceof Displayable) {
+                return [$field->key() => $field->renderDisplayable(
+                    $this->getModelAttribute($model, $field->key()), $model
+                )];
+            }
+
+            return [];
+        });
     }
 }

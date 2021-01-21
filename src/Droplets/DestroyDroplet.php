@@ -6,21 +6,19 @@ use Illuminate\Routing\Router;
 use RippleAdmin\Droplet;
 use RippleAdmin\Pages\TablePage;
 
-class IndexDroplet extends Droplet
+class DestroyDroplet extends Droplet
 {
     public $methods = [
-        'index',
+        'destroy',
     ];
 
-    protected $pagination = true;
-
-    public function index()
+    public function destroy()
     {
-        return $this->page(TablePage::class);
+        // return $this->page(TablePage::class);
     }
 
     public function routes(Router $router)
     {
-        $router->get('/', $this->water->action('index'));
+        // $router->get('/', $this->water->action('index'));
     }
 }

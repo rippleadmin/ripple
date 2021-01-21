@@ -2,16 +2,16 @@
 
 namespace RippleAdmin\Pages;
 
-use RippleAdmin\Components\Table;
+use RippleAdmin\Components\Detail;
 use RippleAdmin\Page;
 
-class TablePage extends Page
+class DetailPage extends Page
 {
-    protected $name = 'List/Table';
+    protected $name = 'List/Detail';
 
-    protected $title = 'Table page';
+    protected $title = 'Detail page';
 
-    public function columns()
+    public function fields()
     {
         return $this->droplet->getFieldsLabel();
     }
@@ -24,8 +24,8 @@ class TablePage extends Page
     public function pageProps()
     {
         return [
-            'table' => Table::make()
-                ->setColumns($this->columns())
+            'detail' => Detail::make()
+                ->setFields($this->fields())
                 ->setData($this->data()),
         ];
     }

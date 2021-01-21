@@ -2,73 +2,28 @@
 
 namespace RippleAdmin\Concerns;
 
-use RippleAdmin\Page;
 use RippleAdmin\Droplet;
 
 trait HasPages
 {
     /**
-     * The pages instance.
+     * Make a new page instance.
      *
-     * @var array
-     */
-    protected $pages = [];
-
-    /**
-     * Get all pages instance.
-     *
-     * @return array
-     */
-    public function pages()
-    {
-        return $this->pages;
-    }
-
-    /**
-     * Get the page instance.
-     *
-     * @param  string  $name
+     * @param  string  $page
+     * @param  array  $parameters
      * @return \RippleAdmin\Page
      */
-    public function page(string $name)
+    public function page(string $page, array $parameters = [])
     {
-        return $this->pages[$name];
-    }
+        /** @var \RippleAdmin\Page $page */
+        $page = app($page, $parameters);
 
-    /**
-     * Add a new page instance.
-     *
-     * @param  string  $name
-     * @param  \RippleAdmin\Page  $page
-     * @return $this
-     */
-    public function addPage(string $name, Page $page)
-    {
-        $this->pages[$name] = $page;
-
-        return $this;
-    }
-
-    /**
-     * Bootstrap all droplets instance.
-     *
-     * @return $this
-     */
-    public function bootPages()
-    {
-        foreach ($this->pages as $name => $page) {
-            /** @var \RippleAdmin\Page $page */
-            $page = app($page);
-
-            $this->addPage($name, $page);
-
-            if ($this instanceof Droplet) {
-                $page->setDroplet($this);
-            }
-
-            $page->boot();
+        if ($this instanceof Droplet) {
+            $page->setDroplet($this);
         }
 
-        return $this;
+        $page->boot();
+
+        return $page;
     }
 }

@@ -20,7 +20,7 @@ trait FieldsValues
     /**
      * Set the droplet fields.
      *
-     * @param array $fields
+     * @param  \RippleAdmin\Field[]  $fields
      * @return void
      */
     public function fields(array $fields)

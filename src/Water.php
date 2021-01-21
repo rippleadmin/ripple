@@ -3,21 +3,22 @@
 namespace RippleAdmin;
 
 use Illuminate\Routing\Router;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
 use ReflectionClass;
 use ReflectionMethod;
-use RippleAdmin\Concerns\HasOperations;
+use RippleAdmin\Concerns\HasActions;
 use RippleAdmin\Concerns\HasPages;
+use RippleAdmin\Droplets\CreateDroplet;
+use RippleAdmin\Droplets\DestroyDroplet;
+use RippleAdmin\Droplets\EditDroplet;
 use RippleAdmin\Droplets\IndexDroplet;
-use RuntimeException;
+use RippleAdmin\Droplets\ShowDroplet;
 
 abstract class Water
 {
     use Macroable,
         HasPages,
-        HasOperations;
+        HasActions;
 
     /**
      * The original model class.
@@ -36,21 +37,16 @@ abstract class Water
     /**
      * The droplets instance.
      *
-     * @var array
+     * @var string[]|\RippleAdmin\Droplet[]
      */
     protected $droplets = [
         'index' => IndexDroplet::class,
-        // 'show' => ShowDroplet::class,
+        'show' => ShowDroplet::class,
         // 'create' => CreateDroplet::class,
         // 'edit' => EditDroplet::class,
         // 'destroy' => DestroyDroplet::class,
     ];
 
-    /**
-     * Create a new water model instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->bootDroplets();
@@ -62,10 +58,10 @@ abstract class Water
      *
      * @return \RippleAdmin\Field[]
      */
-    abstract public function fields();
+    abstract public function fields(): array;
 
     /**
-     * Bootstrap model.
+     * Bootstrap water model.
      *
      * @return void
      */
@@ -89,11 +85,29 @@ abstract class Water
     }
 
     /**
+     * Bootstrap all droplets instance.
+     *
+     * @return void
+     */
+    public function bootDroplets()
+    {
+        foreach ($this->droplets as $name => $droplet) {
+            /** @var \RippleAdmin\Droplet $droplet */
+            $droplet = new $droplet($this);
+            $droplet->fields($this->fields());
+
+            $this->addDroplet($name, $droplet);
+
+            static::mixinDroplet($droplet);
+        }
+    }
+
+    /**
      * Get all droplets instance.
      *
-     * @return array
+     * @return \RippleAdmin\Droplet[]
      */
-    public function droplets()
+    public function droplets(): array
     {
         return $this->droplets;
     }
@@ -110,72 +124,50 @@ abstract class Water
     }
 
     /**
-     * Bootstrap all droplets instance.
-     *
-     * @return void
-     */
-    public function bootDroplets()
-    {
-        foreach ($this->droplets as $name => $droplet) {
-            if (method_exists(static::class, Str::camel($name))) {
-                throw new RuntimeException(
-                    sprintf('Droplet name "%s" is exists in %s::class.', $name, static::class)
-                );
-            }
-
-            /** @var \RippleAdmin\Droplet $droplet */
-            $droplet = app($droplet);
-            $droplet->fields($this->fields());
-
-            $this->addDroplet($name, $droplet);
-            // $this->addDroplet(
-            //     $name, $this->{Str::camel($name)}($droplet)
-            // );
-
-            static::mixinDroplet($droplet, ['routes']);
-        }
-    }
-
-    /**
      * Add a new droplet instance.
      *
      * @param  string  $name
-     * @param  string|\RippleAdmin\Droplet  $droplet
+     * @param  \RippleAdmin\Droplet  $droplet
      * @return $this
      */
     public function addDroplet(string $name, Droplet $droplet)
     {
         $this->droplets[$name] = $droplet;
-        $droplet->setWater($this);
-
-        // Set pages from droplets
-        foreach ($droplet->pages() as $name => $page) {
-            $this->addPage($name, $page);
-            $page->setWater($this);
-        }
-
-        // Set operations from droplets
-        foreach ($droplet->operations() as $name => $operation) {
-            $this->addOperation($name, $operation);
-            $operation->setWater($this);
-        }
 
         return $this;
     }
 
-    public static function mixinDroplet(Droplet $droplet, array $except = [], $replace = true)
+    /**
+     * Mix droplet instance into the water model.
+     *
+     * @param  \RippleAdmin\Droplet  $droplet
+     * @param  bool  $replace
+     * @return void
+     */
+    public static function mixinDroplet(Droplet $droplet, $replace = true)
     {
-        $methods = Arr::except((new ReflectionClass($droplet))->getMethods(
+        $methods = array_filter((new ReflectionClass($droplet))->getMethods(
             ReflectionMethod::IS_PUBLIC
-        ), $except);
+        ), function (ReflectionMethod $method) use ($droplet) {
+            return in_array($method->name, $droplet->methods);
+        });
 
         foreach ($methods as $method) {
             if ($replace || ! static::hasMacro($method->name)) {
-                static::macro($method->name, fn () => $method->invoke($droplet));
+                static::macro($method->name, fn (...$parameters) =>
+                    $method->invoke($droplet, ...$parameters)
+                );
             }
         }
     }
 
+    /**
+     * Register the water routes.
+     *
+     * @param  \Illuminate\Routing\Router  $router
+     * @param  string  $routePrefix
+     * @return void
+     */
     public function registerRoute(Router $router, string $routePrefix)
     {
         $router->prefix($routePrefix)->group(function (Router $router) {
@@ -184,14 +176,26 @@ abstract class Water
         });
     }
 
+    /**
+     * Register the droplets routes.
+     *
+     * @param  \Illuminate\Routing\Router  $router
+     * @return void
+     */
     protected function registerDropletsRoute(Router $router)
     {
         foreach ($this->droplets as $droplet) {
-            $router->droplet($droplet);
+            $droplet->routes($router);
         }
     }
 
-    public function action(string $action)
+    /**
+     * Get the route action.
+     *
+     * @param  string  $action
+     * @return string[]
+     */
+    public function action(string $action): array
     {
         return [static::class, $action];
     }
