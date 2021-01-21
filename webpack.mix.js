@@ -5,6 +5,7 @@ const path = require('path')
 mix.setPublicPath('public')
   .js('resources/js/main.js', 'public/js')
   .js('resources/js/ripple-admin.js', 'public/js')
+  .vue()
   .webpackConfig({
     output: {
       publicPath: '/vendor/ripple-admin/',
@@ -27,7 +28,7 @@ fs.access('../ripple-test', error => {
       // Run Laravel Mix copy file method
       new (require('laravel-mix/src/tasks/CopyFilesTask'))({
         from: 'public',
-        to: new File('../ripple-test/public/vendor/ripple-admin')
+        to: new (require('laravel-mix/src/File'))('../ripple-test/public/vendor/ripple-admin')
       }).run()
     })
   }
